@@ -117,3 +117,5 @@ INFO:SidebarDataset:Processed a total of 99763 inbound items.
 INFO:SidebarDataset:Graph has 352428 triples.
 WARNING:__main__:Output file already exists: /Users/paregorios/Documents/files/P/pleiades_sidebar_graph/data/sidebar_graph.ttl. Backing up to /Users/paregorios/Documents/files/P/pleiades_sidebar_graph/data/sidebar_graph.ttl.bak.
 ```
+
+Most of the script's functionality is provided by the `SidebarDataset` class defined in `src/pleiades_sidebar_graph/sidebar.py`.
