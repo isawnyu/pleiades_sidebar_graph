@@ -11,8 +11,19 @@ Read and parse sidebar LPF JSON into a graph
 
 import json
 from pathlib import Path
+from pleiades_sidebar_graph.text import clean_text
 from pprint import pformat
-from rdflib import Graph
+from rdflib import Graph, Namespace, URIRef, Literal
+from rdflib.namespace import RDF, RDFS, SKOS
+from validators import url as is_valid_url
+
+ns = {
+    "geojson": Namespace("https://purl.org/geojson/vocab#"),
+    "RDF": RDF,
+    "RDFS": RDFS,
+    "schema": Namespace("http://schema.org/"),
+    "SKOS": SKOS,
+}
 
 
 class SidebarDataset:
@@ -66,4 +77,60 @@ class SidebarDataset:
         """
         graph = Graph()
         # Implementation for parsing JSON into a graph goes here
+        for pid, data in json_data.items():
+            for external_feature in data.get("inbound", []):
+                external_id = external_feature["@id"]
+                if not is_valid_url(external_id):
+                    raise ValueError(
+                        f"Invalid URL found: {external_id} in inbound items for PID {pid}"
+                    )
+                external_id = URIRef(external_id)
+                if external_id not in graph.subjects():
+                    # type
+                    if external_feature["type"] == "Feature":
+                        graph.add((external_id, ns["RDF"].type, ns["geojson"].Feature))
+                    else:
+                        raise ValueError(
+                            f"Unexpected type found: {external_feature['type']} for PID {pid}"
+                        )
+
+                    properties = external_feature.get("properties", {})
+
+                    # title
+                    title = properties["title"]
+                    if title is None:
+                        raise ValueError(f"Missing title for PID {pid}")
+                    title = clean_text(title)
+                    if not title:
+                        raise ValueError(f"Empty title for PID {pid}")
+                    graph.add(
+                        (
+                            external_id,
+                            ns["RDFS"].label,
+                            Literal(title, lang="und"),
+                        )
+                    )
+
+                    # summary
+                    summary = properties["summary"]
+                    if summary is not None:
+                        summary = clean_text(summary)
+                    if summary:
+                        graph.add(
+                            (
+                                external_id,
+                                ns["schema"].description,
+                                Literal(summary, lang="und"),
+                            )
+                        )
+                # process relationships for external features
+                for link in external_feature["links"]:
+                    if link["type"] == "closeMatch":
+                        predicate = ns["SKOS"].closeMatch
+                    elif link["type"] == "relatedMatch":
+                        predicate = ns["SKOS"].relatedMatch
+                    else:
+                        raise NotImplementedError(
+                            f"Unexpected link type: {link['type']} for PID {pid}"
+                        )
         return graph
