@@ -79,9 +79,9 @@ class SidebarDataset:
                     raise RuntimeError(
                         f"Duplicate JSON file found for PID {pid} in {root / file}."
                     )
-                if count % 1000 == 0 and count > 0:
-                    self.logger.debug(f"Loaded {count} JSON files so far...")
-        self.logger.debug(f"Loaded a total of {count} JSON files.")
+                if count % 5000 == 0 and count > 0:
+                    self.logger.info(f"Loaded {count} JSON files so far...")
+        self.logger.info(f"Loaded a total of {count} JSON files.")
         return all_the_json
 
     def _parse_json_to_graph(self, json_data) -> Graph:
@@ -181,7 +181,8 @@ class SidebarDataset:
                     graph.add((external_id, predicate, object_id))
                     if reciprocate:
                         graph.add((object_id, ns["SKOS"].relatedMatch, external_id))
-                if count % 1000 == 0 and count > 0:
-                    self.logger.debug(f"Processed {count} inbound items so far...")
-
+                if count % 5000 == 0 and count > 0:
+                    self.logger.info(f"Processed {count} inbound items so far...")
+        self.logger.info(f"Processed a total of {count} inbound items.")
+        self.logger.info(f"Graph has {len(graph)} triples.")
         return graph
