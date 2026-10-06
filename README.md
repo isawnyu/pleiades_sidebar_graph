@@ -1,8 +1,8 @@
 # pleiades_sidebar_graph
 
-by Tom Elliott for the Institute for the Study of the Ancient World (ISAW) at New York University.
-(c) Copyright 2026 by New York University
-Licensed under the AGPL-3.0; see LICENSE.txt file.
+by Tom Elliott for the Institute for the Study of the Ancient World (ISAW) at New York University.\
+(c) Copyright 2026 by New York University.\
+Licensed under the AGPL-3.0; see LICENSE.txt file.   
 
 ## What?
 
