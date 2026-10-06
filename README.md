@@ -8,7 +8,7 @@ Licensed under the AGPL-3.0; see LICENSE.txt file.
 
 Create RDF (and then work with it) from the [Linked Places Format JSON data](https://github.com/isawnyu/pleiades.datasets/tree/main/data/sidebar) compiled to support the [Pleiades Linked Data Sidebar](https://pleiades.stoa.org/help/linked-data-sidebar) feature of the [Pleiades gazetteer of ancient places](https://pleiades.stoa.org/). 
 
-Triples in the graph are like this:
+Triples in the graph, as currently produced (see "How?" below), are like this:
 
 ```turtle
 @prefix geojson: <https://purl.org/geojson/vocab#> .
