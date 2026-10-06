@@ -1,0 +1,25 @@
+[
+    {
+        "@id": "http://www.wikidata.org/entity/Q14218430",
+        "type": "Feature",
+        "properties": {
+            "title": "Qasr el-Ghueita",
+            "summary": "Archaeological site in the Egyptian depression of el-Kharga",
+            "reciprocal": true
+        },
+        "links": [
+            {
+                "type": "closeMatch",
+                "identifier": "https://pleiades.stoa.org/places/776215"
+            },
+            {
+                "type": "closeMatch",
+                "identifier": "https://www.geonames.org/350652"
+            },
+            {
+                "type": "closeMatch",
+                "identifier": "https://www.trismegistos.org/place/2040"
+            }
+        ]
+    }
+]

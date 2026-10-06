@@ -1,0 +1,109 @@
+[
+    {
+        "@id": "http://www.wikidata.org/entity/Q428570",
+        "type": "Feature",
+        "properties": {
+            "title": "Kharga Oasis",
+            "summary": "Depression in Egypt",
+            "reciprocal": true
+        },
+        "links": [
+            {
+                "type": "closeMatch",
+                "identifier": "https://pleiades.stoa.org/places/776210"
+            },
+            {
+                "type": "closeMatch",
+                "identifier": "https://www.geonames.org/360478"
+            }
+        ]
+    },
+    {
+        "@id": "https://atlas.paths-erc.eu/places/154",
+        "type": "Feature",
+        "properties": {
+            "title": "Oasis Magna",
+            "summary": null,
+            "reciprocal": true
+        },
+        "links": [
+            {
+                "type": "closeMatch",
+                "identifier": "https://pleiades.stoa.org/places/776210"
+            },
+            {
+                "type": "closeMatch",
+                "identifier": "https://www.trismegistos.org/place/619"
+            }
+        ]
+    },
+    {
+        "@id": "https://atlas.paths-erc.eu/places/183",
+        "type": "Feature",
+        "properties": {
+            "title": "Kharga",
+            "summary": null,
+            "reciprocal": true
+        },
+        "links": [
+            {
+                "type": "closeMatch",
+                "identifier": "https://pleiades.stoa.org/places/776210"
+            },
+            {
+                "type": "closeMatch",
+                "identifier": "https://www.trismegistos.org/place/619"
+            }
+        ]
+    },
+    {
+        "@id": "https://itiner-e.org/route-segment/21061",
+        "type": "Feature",
+        "properties": {
+            "title": "21061 Dakhla el Qasr-Lycopolis",
+            "summary": "Conjectured Main Road",
+            "reciprocal": false
+        },
+        "links": [
+            {
+                "type": "relatedMatch",
+                "identifier": "https://pleiades.stoa.org/places/776157"
+            },
+            {
+                "type": "relatedMatch",
+                "identifier": "https://pleiades.stoa.org/places/776160"
+            },
+            {
+                "type": "relatedMatch",
+                "identifier": "https://pleiades.stoa.org/places/776186"
+            },
+            {
+                "type": "relatedMatch",
+                "identifier": "https://pleiades.stoa.org/places/776210"
+            },
+            {
+                "type": "relatedMatch",
+                "identifier": "https://pleiades.stoa.org/places/776232"
+            }
+        ]
+    },
+    {
+        "@id": "https://topostext.org/place/255307UOas",
+        "type": "Feature",
+        "properties": {
+            "title": "Oasis Magna/Thebaidos (Egypt)",
+            "summary": "an ancient town of Western Egypt centered on a large oasis",
+            "reciprocal": true
+        },
+        "links": [
+            {
+                "type": "closeMatch",
+                "identifier": "https://pleiades.stoa.org/places/776210"
+            },
+            {
+                "type": "closeMatch",
+                "identifier": "https://www.wikidata.org/wiki/Q428570"
+            }
+        ]
+    }
+]

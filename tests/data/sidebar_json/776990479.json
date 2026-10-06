@@ -1,0 +1,17 @@
+[
+    {
+        "@id": "http://www.wikidata.org/entity/Q13126488",
+        "type": "Feature",
+        "properties": {
+            "title": "Roman Fort at Pen y Gaer",
+            "summary": "Roman fort in Powys, Wales, UK",
+            "reciprocal": true
+        },
+        "links": [
+            {
+                "type": "closeMatch",
+                "identifier": "https://pleiades.stoa.org/places/776990479"
+            }
+        ]
+    }
+]
