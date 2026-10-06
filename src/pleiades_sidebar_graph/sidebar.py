@@ -10,11 +10,13 @@ Read and parse sidebar LPF JSON into a graph
 """
 
 import json
+import logging
 from pathlib import Path
 from pleiades_sidebar_graph.text import clean_text
 from pprint import pformat
 from rdflib import Graph, Namespace, URIRef, Literal
 from rdflib.namespace import RDF, RDFS, SKOS
+from urllib.parse import urlsplit
 from validators import url as is_valid_url
 
 ns = {
@@ -37,8 +39,10 @@ class SidebarDataset:
 
         :param json_data_path: The path to a directory tree containing JSON files.
         """
+        logger = logging.getLogger("SidebarDataset")
         self.json_data = self._load_json(json_data_path)
         self.graph = self._parse_json_to_graph(self.json_data)
+        logger.debug(self.graph.serialize())
 
     def _load_json(self, json_data_path: Path) -> dict:
         """
@@ -85,6 +89,13 @@ class SidebarDataset:
                         f"Invalid URL found: {external_id} in inbound items for PID {pid}"
                     )
                 external_id = URIRef(external_id)
+                properties = external_feature.get("properties", {})
+                pleiades_reciprocal = properties["reciprocal"]
+                if not isinstance(pleiades_reciprocal, bool):
+                    raise TypeError(
+                        f"Invalid reciprocal value: {pleiades_reciprocal} for PID {pid}"
+                    )
+
                 if external_id not in graph.subjects():
                     # type
                     if external_feature["type"] == "Feature":
@@ -93,8 +104,6 @@ class SidebarDataset:
                         raise ValueError(
                             f"Unexpected type found: {external_feature['type']} for PID {pid}"
                         )
-
-                    properties = external_feature.get("properties", {})
 
                     # title
                     title = properties["title"]
@@ -133,4 +142,20 @@ class SidebarDataset:
                         raise NotImplementedError(
                             f"Unexpected link type: {link['type']} for PID {pid}"
                         )
+                    object_id = link["identifier"]
+                    if not is_valid_url(object_id):
+                        raise ValueError(
+                            f"Invalid URL found: {object_id} in links for PID {pid}"
+                        )
+                    reciprocate = False
+                    if (
+                        urlsplit(object_id).netloc == "pleiades.stoa.org"
+                        and pleiades_reciprocal
+                    ):
+                        reciprocate = True
+                    object_id = URIRef(object_id)
+                    graph.add((external_id, predicate, object_id))
+                    if reciprocate:
+                        graph.add((object_id, ns["SKOS"].relatedMatch, external_id))
+
         return graph
