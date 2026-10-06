@@ -119,3 +119,12 @@ WARNING:__main__:Output file already exists: /Users/paregorios/Documents/files/P
 ```
 
 Most of the script's functionality is provided by the `SidebarDataset` class defined in `src/pleiades_sidebar_graph/sidebar.py`.
+
+## Roadmap
+
+See "What's next" above. And:
+
+- [ ] `geojson:Feature` is an artifact of the LPF source of the data and it's not actually accurate for how I want to use it here. Probably best to redfine these as some sort of documents about places (Pleiades makes this distinction in its RDF, but not all of the others do, because not all of them even have RDF).
+- [ ] could flesh out the Pleiades subjects by grabbing titles and summaries from the existing Pleiades RDF.
+- [ ] could fix "und" language/script on some literals by pulling from original project RDF, but why given current use cases?
+- [ ] an early fun reasoning test might be to generate reports of (a) resources that a Pleiades place resource links to but that don't reciprocate, and (b) external resources that reference a Pleiades resource, but Pleiades doesn't reciprocate.
