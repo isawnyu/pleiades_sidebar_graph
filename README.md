@@ -124,7 +124,7 @@ Most of the script's functionality is provided by the `SidebarDataset` class def
 
 The `graph_stats.py` script loads an RDF graph using `rdflib` and then converts it to a `networkx` `graph` and then prints out a bunch of statistics on it as provided by those tools and a bit of code. 
 
-```bash
+```
 python scripts/graph_stats.py data/sidebar_graph.ttl
 Stats from rdflib
 --------------------------------------------------------------------------------
