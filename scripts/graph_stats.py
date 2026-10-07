@@ -14,7 +14,7 @@ import logging
 import networkx as nx
 from pathlib import Path
 from rdflib import Graph
-from rdflib.extras.external_graph_libs import rdflib_to_networkx_graph
+from rdflib.extras.external_graph_libs import rdflib_to_networkx_multidigraph
 import sys
 from urllib.parse import urlsplit
 
@@ -92,13 +92,22 @@ def main(**kwargs):
         else:
             raise TypeError(f"")
 
-    nxg = rdflib_to_networkx_graph(g)
+    nxg = rdflib_to_networkx_multidigraph(g)
 
     print("")
     print(f"Stats from rdflib")
     print("-" * 80)
-    for k, v in {"Edges": len(nxg.edges())}.items():
-        print(f"  {k}: {v:,}")
+    for k, v in {
+        "Edges": len(nxg.edges),
+        "Nodes": len(nxg.nodes),
+        "Degree": len(nxg.degree),
+    }.items():
+        if isinstance(v, int):
+            print(f"  {k}: {v:,}")
+        elif isinstance(v, list):
+            print(f"  {k}:\n    - {'\n    - '.join(v)}")
+        else:
+            raise TypeError(f"")
 
     sys.exit(EXIT_SUCCESS)  # if error, sys.exit(EXIT_ERROR)
 
