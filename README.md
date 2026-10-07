@@ -197,6 +197,10 @@ Stats from networkx
 
 ```
 
+### Learning about networkx
+
+I'm poking at networkx in `notebooks/networkx_experiments.ipynb`.
+
 ## Roadmap
 
 See "What's next" above. And:
