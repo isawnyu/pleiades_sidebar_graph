@@ -186,9 +186,15 @@ Stats from rdflib
     - www.pompeiiinpictures.com
     - www.trismegistos.org
 
-Stats from rdflib
+Stats from networkx
 --------------------------------------------------------------------------------
   Edges: 332,522
+  Nodes: 198,459
+  Density: 1
+  Degree (maximum): 66,457
+  Degree (minimum): 1
+  Degree (average): 3.35
+
 ```
 
 ## Roadmap

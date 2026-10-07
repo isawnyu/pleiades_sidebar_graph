@@ -14,7 +14,7 @@ import logging
 import networkx as nx
 from pathlib import Path
 from rdflib import Graph
-from rdflib.extras.external_graph_libs import rdflib_to_networkx_multidigraph
+from rdflib.extras.external_graph_libs import rdflib_to_networkx_graph
 import sys
 from urllib.parse import urlsplit
 
@@ -92,22 +92,29 @@ def main(**kwargs):
         else:
             raise TypeError(f"")
 
-    nxg = rdflib_to_networkx_multidigraph(g)
+    nxg = rdflib_to_networkx_graph(g)
 
     print("")
-    print(f"Stats from rdflib")
+    print(f"Stats from networkx")
     print("-" * 80)
+    degrees = [d for n, d in nxg.degree()]
+
     for k, v in {
-        "Edges": len(nxg.edges),
-        "Nodes": len(nxg.nodes),
-        "Degree": len(nxg.degree),
+        "Edges": nxg.number_of_edges(),
+        "Nodes": nxg.number_of_nodes(),
+        "Density": nx.is_connected(nxg),
+        "Degree (maximum)": max(degrees),
+        "Degree (minimum)": min(degrees),
+        "Degree (average)": sum(degrees) / len(degrees),
     }.items():
         if isinstance(v, int):
             print(f"  {k}: {v:,}")
+        elif isinstance(v, float):
+            print(f"  {k}: {v:,.3}")
         elif isinstance(v, list):
             print(f"  {k}:\n    - {'\n    - '.join(v)}")
         else:
-            raise TypeError(f"")
+            raise TypeError(f"{k}: {type(v)}")
 
     sys.exit(EXIT_SUCCESS)  # if error, sys.exit(EXIT_ERROR)
 
