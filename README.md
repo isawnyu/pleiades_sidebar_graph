@@ -66,7 +66,7 @@ Lots could be done with this. The first thing I'm thinking about doing is reason
 
 ## How?
 
-At present there is just a script to generate the RDF from the LPF:
+### Script Convert Sidebar LPF to RDF TTL: `scripts/generate_graph_from_sidebar_json.py`
 
 ```
 python scripts/generate_graph_from_sidebar_json.py -v
@@ -119,6 +119,77 @@ WARNING:__main__:Output file already exists: /Users/paregorios/Documents/files/P
 ```
 
 Most of the script's functionality is provided by the `SidebarDataset` class defined in `src/pleiades_sidebar_graph/sidebar.py`.
+
+### Script to get stats from an RDF file
+
+The `graph_stats.py` script loads an RDF graph using `rdflib` and then converts it to a `networkx` `graph` and then prints out a bunch of statistics on it as provided by those tools and a bit of code. 
+
+```bash
+python scripts/graph_stats.py data/sidebar_graph.ttl
+Stats from rdflib
+--------------------------------------------------------------------------------
+  Statements: 352,428
+  Subjects: 352,428
+  Unique Subjects: 79,652
+  Unique Subject Netlocs:
+    - atlas.paths-erc.eu
+    - chronique.efa.gr
+    - edh.ub.uni-heidelberg.de
+    - itiner-e.org
+    - nomisma.org
+    - p-lod.org
+    - pleiades.stoa.org
+    - resource.manto.unh.edu
+    - romeresearchgroup.org
+    - topostext.org
+    - vici.org
+    - whgazetteer.org
+    - www.wikidata.org
+  Predicates: 352,428
+  Unique Predicates: 5
+  Unique Predicate Values:
+    - rdf:type
+    - rdfs:label
+    - schema:description
+    - skos:closeMatch
+    - skos:relatedMatch
+  Objects: 352,428
+  Unique Objects: 152,437
+  Unique Object Netlocs (not in subject netlocs):
+    - 
+    - catalogue.bnf.fr
+    - collection.britishmuseum.org
+    - d-nb.info
+    - dare.ht.lu.se
+    - dbpedia.org
+    - en.wikipedia.org
+    - gazetteer.dainst.org
+    - id.loc.gov
+    - ikmk.smb.museum
+    - isni.org
+    - omnesviae.org
+    - palp.art
+    - pompeiiinpictures.com
+    - purl.org
+    - slsgazetteer.org
+    - sws.geonames.org
+    - tesauros.mecd.es
+    - viaf.org
+    - vocab.getty.edu
+    - wikidata.org
+    - www.britishmuseum.org
+    - www.dbpedia.org
+    - www.freebase.com
+    - www.geonames.org
+    - www.idref.fr
+    - www.livius.org
+    - www.pompeiiinpictures.com
+    - www.trismegistos.org
+
+Stats from rdflib
+--------------------------------------------------------------------------------
+  Edges: 332,522
+```
 
 ## Roadmap
 

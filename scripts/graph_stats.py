@@ -11,9 +11,12 @@ Get statistics on a graph
 
 from airtight.cli import configure_commandline
 import logging
+import networkx as nx
 from pathlib import Path
 from rdflib import Graph
+from rdflib.extras.external_graph_libs import rdflib_to_networkx_graph
 import sys
+from urllib.parse import urlsplit
 
 logger = logging.getLogger(__name__)
 
@@ -53,8 +56,50 @@ def main(**kwargs):
     # code here
     # when all is done and goes well
     rdfpath = Path(kwargs["rdffile"]).expanduser().resolve()
+
     g = Graph()
     g.parse(rdfpath)
+    print(f"Stats from rdflib")
+    print("-" * 80)
+    subjects = [s for s in g.subjects()]
+    u_subjects = set(subjects)
+    u_subj_netlocs = {urlsplit(str(s)).netloc for s in u_subjects}
+    predicates = [p for p in g.predicates()]
+    u_predicates = set(predicates)
+    objects = [o for o in g.objects()]
+    u_objects = set(objects)
+    u_obj_netlocs = {urlsplit(str(o)).netloc for o in u_objects}
+    for k, v in {
+        "Statements": len(g),
+        "Subjects": len(subjects),
+        "Unique Subjects": len(u_subjects),
+        "Unique Subject Netlocs": sorted(list(u_subj_netlocs)),
+        "Predicates": len(predicates),
+        "Unique Predicates": len(u_predicates),
+        "Unique Predicate Values": sorted(
+            [p.n3(g.namespace_manager) for p in u_predicates]
+        ),
+        "Objects": len(objects),
+        "Unique Objects": len(u_objects),
+        "Unique Object Netlocs (not in subject netlocs)": sorted(
+            list(u_obj_netlocs.difference(u_subj_netlocs))
+        ),
+    }.items():
+        if isinstance(v, int):
+            print(f"  {k}: {v:,}")
+        elif isinstance(v, list):
+            print(f"  {k}:\n    - {'\n    - '.join(v)}")
+        else:
+            raise TypeError(f"")
+
+    nxg = rdflib_to_networkx_graph(g)
+
+    print("")
+    print(f"Stats from rdflib")
+    print("-" * 80)
+    for k, v in {"Edges": len(nxg.edges())}.items():
+        print(f"  {k}: {v:,}")
+
     sys.exit(EXIT_SUCCESS)  # if error, sys.exit(EXIT_ERROR)
 
 
